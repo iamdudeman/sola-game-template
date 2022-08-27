@@ -7,7 +7,7 @@ import java.io.IOException;
 public class FileServerMain {
   public static void main(String[] args) throws IOException {
     SimpleSolaBrowserFileServer simpleSolaBrowserFileServer = new SimpleSolaBrowserFileServer(
-      "examples/browser/build",
+      "browser/build",
       "assets"
     );
 
