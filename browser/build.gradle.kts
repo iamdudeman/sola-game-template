@@ -1,0 +1,22 @@
+plugins {
+  id("sola.java-conventions")
+}
+
+repositories {
+  mavenCentral()
+}
+
+dependencies {
+  api(files("../libs/sola-engine-browser-fat-${project.properties["solaVersion"]}.jar"))
+  implementation(project(":game"))
+}
+
+task("generateBrowserExampleHtmlAndJs", type = JavaExec::class) {
+  group = "build"
+
+  dependsOn(tasks.getByPath("assemble"))
+
+  classpath = sourceSets.main.get().runtimeClasspath
+  setArgsString("build ${project.name}-${project.version}.jar")
+  mainClass.set("technology.sola.browser.GenerateBrowserFilesMain")
+}
