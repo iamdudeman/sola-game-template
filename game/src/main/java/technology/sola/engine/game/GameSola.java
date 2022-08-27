@@ -3,6 +3,7 @@ package technology.sola.engine.game;
 import technology.sola.ecs.Component;
 import technology.sola.ecs.EcsSystem;
 import technology.sola.ecs.World;
+import technology.sola.engine.assets.graphics.SpriteSheet;
 import technology.sola.engine.core.Sola;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
@@ -10,6 +11,7 @@ import technology.sola.engine.core.module.graphics.SolaGraphics;
 import technology.sola.engine.core.module.physics.SolaPhysics;
 import technology.sola.engine.graphics.Color;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
+import technology.sola.engine.graphics.components.sprite.SpriteComponent;
 import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.input.Key;
 import technology.sola.engine.physics.component.ColliderComponent;
@@ -31,6 +33,9 @@ public class GameSola extends Sola {
     solaPhysics = SolaPhysics.createInstance(eventHub, solaEcs);
     solaGraphics = SolaGraphics.createInstance(solaEcs, platform.getRenderer(), assetLoaderProvider);
 
+    assetLoaderProvider.get(SpriteSheet.class)
+      .addAssetMapping("test", "assets/test_tiles_spritesheet.json");
+
     solaEcs.addSystems(new PlayerSystem());
     solaEcs.setWorld(buildWorld());
   }
@@ -47,9 +52,9 @@ public class GameSola extends Sola {
 
     world.createEntity()
       .addComponent(new PlayerComponent())
-      .addComponent(new TransformComponent(200, 300, 50, 50))
-      .addComponent(new RectangleRendererComponent(Color.BLUE))
-      .addComponent(ColliderComponent.aabb())
+      .addComponent(new TransformComponent(200, 300))
+      .addComponent(new SpriteComponent("test", "blue"))
+      .addComponent(ColliderComponent.aabb(16, 16))
       .addComponent(new DynamicBodyComponent())
       .setName("player");
 
