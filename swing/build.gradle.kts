@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-  mainClass.set("technology.sola.swing.SwingMain")
+  mainClass.set("${project.properties["basePackage"]}.swing.SwingMain")
 }
 
 repositories {
@@ -18,7 +18,7 @@ dependencies {
 
 tasks.withType<Jar>() {
   manifest {
-    attributes["Main-Class"] = "technology.sola.swing.SwingMain"
+    attributes["Main-Class"] = "${project.properties["basePackage"]}.swing.SwingMain"
   }
 
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
@@ -28,7 +28,7 @@ tasks.withType<Jar>() {
     configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
   })
 
-  archiveBaseName.set("sola-game-template-${project.name}")
+  archiveBaseName.set("${project.properties["gameName"]}-${project.name}")
 }
 
 tasks.withType<Zip>() {

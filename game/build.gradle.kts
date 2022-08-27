@@ -3,7 +3,7 @@ plugins {
 }
 
 tasks.jar {
-  archiveBaseName.set("sola-game-template-${project.name}")
+  archiveBaseName.set("${project.properties["gameName"]}-${project.name}")
 }
 
 repositories {

@@ -22,5 +22,5 @@ task("generateBrowserExampleHtmlAndJs", type = JavaExec::class) {
 
   classpath = sourceSets.main.get().runtimeClasspath
   setArgsString("build ${project.name}-${project.version}.jar")
-  mainClass.set("technology.sola.browser.GenerateBrowserFilesMain")
+  mainClass.set("${project.properties["basePackage"]}.browser.GenerateBrowserFilesMain")
 }

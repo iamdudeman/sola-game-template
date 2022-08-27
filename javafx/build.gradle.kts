@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-  mainClass.set("technology.sola.javafx.JavaFxMain")
+  mainClass.set("${project.properties["basePackage"]}.javafx.JavaFxMain")
 }
 
 repositories {
@@ -18,7 +18,7 @@ dependencies {
 
 tasks.withType<Jar>() {
   manifest {
-    attributes["Main-Class"] = "technology.sola.javafx.JavaFxMain"
+    attributes["Main-Class"] = "${project.properties["basePackage"]}.javafx.JavaFxMain"
   }
   duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 
@@ -28,7 +28,7 @@ tasks.withType<Jar>() {
     configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
   })
 
-  archiveBaseName.set("sola-game-template-${project.name}")
+  archiveBaseName.set("${project.properties["gameName"]}-${project.name}")
 }
 
 tasks.withType<Zip>() {
