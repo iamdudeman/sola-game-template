@@ -1,10 +1,16 @@
 plugins {
   id("application")
   id("sola.java-conventions")
+  id("org.openjfx.javafxplugin") version "0.0.9"
 }
 
 application {
   mainClass.set("${project.properties["basePackage"]}.javafx.JavaFxMain")
+}
+
+javafx {
+  modules("javafx.controls")
+  version = "17"
 }
 
 repositories {
