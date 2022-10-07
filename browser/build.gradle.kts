@@ -4,10 +4,15 @@ plugins {
 
 repositories {
   mavenCentral()
+
+  maven {
+    url = uri("https://jitpack.io")
+  }
 }
 
 dependencies {
-  api(files("../libs/sola-engine-browser-fat-${project.properties["solaVersion"]}.jar"))
+  implementation("com.github.iamdudeman.sola-game-engine:platform-browser:${project.properties["solaVersion"]}")
+
   implementation(project(":game"))
 
   // teavm
