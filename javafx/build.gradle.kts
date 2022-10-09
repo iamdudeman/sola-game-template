@@ -1,16 +1,10 @@
 plugins {
   id("application")
   id("sola.java-conventions")
-  id("org.openjfx.javafxplugin") version "0.0.9"
 }
 
 application {
   mainClass.set("${project.properties["basePackage"]}.javafx.JavaFxMain")
-}
-
-javafx {
-  modules("javafx.controls")
-  version = "17"
 }
 
 repositories {
@@ -24,21 +18,11 @@ repositories {
 dependencies {
   implementation("com.github.iamdudeman.sola-game-engine:platform-javafx:${project.properties["solaVersion"]}")
   implementation(project(":game"))
-}
 
-tasks.withType<Jar>() {
-  manifest {
-    attributes["Main-Class"] = "${project.properties["basePackage"]}.javafx.JavaFxMain"
-  }
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-
-  dependsOn(configurations.runtimeClasspath)
-
-  from({
-    configurations.runtimeClasspath.get().filter { it.name.endsWith("jar") }.map { zipTree(it) }
-  })
-
-  archiveBaseName.set("${project.properties["gameName"]}-${project.name}")
+  // todo figure out how to do this per platform instead of hardcoded to windows
+  runtimeOnly("org.openjfx", "javafx-base", "17.0.2", classifier = "win")
+  runtimeOnly("org.openjfx", "javafx-controls", "17.0.2", classifier = "win")
+  runtimeOnly("org.openjfx", "javafx-graphics", "17.0.2", classifier = "win")
 }
 
 tasks.withType<Zip>() {
