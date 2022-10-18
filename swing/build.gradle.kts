@@ -7,23 +7,7 @@ application {
   mainClass.set("${project.properties["basePackage"]}.swing.SwingMain")
 }
 
-repositories {
-  mavenCentral()
-
-  maven {
-    url = uri("https://jitpack.io")
-  }
-}
-
 dependencies {
   implementation("com.github.iamdudeman.sola-game-engine:platform-swing:${project.properties["solaVersion"]}")
   implementation(project(":game"))
-}
-
-tasks.withType<Zip>() {
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-}
-
-tasks.withType<Tar>() {
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
