@@ -20,6 +20,7 @@ task("generateWebHtmlAndJs", type = JavaExec::class) {
 task("distWebZip", Zip::class) {
   group = "distribution"
   destinationDirectory.set(file(buildDir))
+  archiveBaseName.set("${project.properties["gameName"]}-${project.name}")
 
   dependsOn(tasks.getByName("generateWebHtmlAndJs"))
 
