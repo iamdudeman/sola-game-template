@@ -24,13 +24,13 @@ public class GameSola extends Sola {
   private SolaPhysics solaPhysics;
 
   public GameSola() {
-    super(new SolaConfiguration("Game", 800, 600, 30, true));
+    super(SolaConfiguration.build("Game", 800, 600).withTargetUpdatesPerSecond(30));
   }
 
   @Override
   protected void onInit() {
-    solaPhysics = SolaPhysics.createInstance(eventHub, solaEcs);
-    solaGraphics = SolaGraphics.createInstance(solaEcs, platform.getRenderer(), assetLoaderProvider);
+    solaPhysics = SolaPhysics.useModule(eventHub, solaEcs);
+    solaGraphics = SolaGraphics.useModule(solaEcs, platform.getRenderer(), assetLoaderProvider);
 
     assetLoaderProvider.get(SpriteSheet.class)
       .addAssetMapping("test", "assets/test_tiles_spritesheet.json");
