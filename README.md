@@ -9,7 +9,7 @@ Template project for building a game using [sola-game-engine](https://github.com
 
 ## Creating Distributable Games
 ### Browser zip file
-Run the following command
+Run the following gradle command
 ```shell
 .\gradlew.bat distWebZip
 ```
@@ -17,7 +17,7 @@ The output will be at `browser/build/<gameName>-browser-<version>.zip`.
 This can be deployed to places like `itch.io` when using the "HTML" project type.
 
 ### Swing + JavaFx fat jar
-Run the following command
+Run the following gradle command
 ```shell
 .\gradlew.bat distFatJar
 ```
@@ -32,13 +32,10 @@ Your users will not need to have Java installed.
 1. Install [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 2. Update $JAVA_HOME path environment variable
   * ex. C:\Program Files\Java\jdk-17.0.5
-  * powershell: $env:JAVA_HOME
-  * To test configuration run: `& $env:JAVA_HOME/bin/jpackage.exe --version`
-3. Run from sola-game-engine\examples\swing on Windows Powershell
+  * To test configuration run: `jpackage --version`
+    * Should see the current jdk version returned: `17.0.5`
+3. Run the following gradle command
 ```shell
-& $env:JAVA_HOME/bin/jpackage.exe --name GameName --app-version 0.1.0 --vendor sola.technology --dest build --input build/libs --main-jar <gameName>-swing-0.1.1.jar --type app-image
+.\gradlew.bat distFatJarZip
 ```
-4. Run from sola-game-engine\examples\javafx on Windows Powershell
-```shell
-& $env:JAVA_HOME/bin/jpackage.exe --name GameName --app-version 0.1.0 --vendor sola.technology --dest build --input build/libs --main-jar <gameName>-javafx-win-0.1.1.jar --type app-image
-```
+4. Output will be in the `build/jpackage` directory
