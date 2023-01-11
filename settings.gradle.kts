@@ -1,5 +1,5 @@
 rootProject.name = "sola-game-template"
 
 include(
-  "game", "javafx", "swing", "browser"
+  "game", "javafx", "swing", "browser", "server"
 )
