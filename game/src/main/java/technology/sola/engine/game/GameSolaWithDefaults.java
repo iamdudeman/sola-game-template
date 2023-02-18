@@ -4,56 +4,34 @@ import technology.sola.ecs.Component;
 import technology.sola.ecs.EcsSystem;
 import technology.sola.ecs.World;
 import technology.sola.engine.assets.graphics.SpriteSheet;
-import technology.sola.engine.core.Sola;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
-import technology.sola.engine.defaults.SolaGraphics;
-import technology.sola.engine.defaults.SolaPhysics;
-import technology.sola.engine.defaults.graphics.modules.RectangleGraphicsModule;
-import technology.sola.engine.defaults.graphics.modules.SpriteGraphicsModule;
+import technology.sola.engine.defaults.SolaWithDefaults;
 import technology.sola.engine.graphics.Color;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
-import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.graphics.screen.AspectMode;
 import technology.sola.engine.input.Key;
 import technology.sola.engine.physics.Material;
 import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
 
-public class GameSola extends Sola {
-  private SolaGraphics solaGraphics;
-  private SolaPhysics solaPhysics;
-
-  public GameSola() {
+public class GameSolaWithDefaults extends SolaWithDefaults {
+  public GameSolaWithDefaults() {
     super(SolaConfiguration.build("Game", 800, 600).withTargetUpdatesPerSecond(30));
   }
 
   @Override
-  protected void onInit() {
-    solaPhysics = new SolaPhysics(eventHub);
-    solaGraphics = new SolaGraphics(solaEcs);
-
-    solaGraphics.addGraphicsModules(
-      new RectangleGraphicsModule(),
-      new SpriteGraphicsModule(assetLoaderProvider.get(SpriteSheet.class))
-    );
+  protected void onInit(DefaultsConfigurator defaultsConfigurator) {
+    defaultsConfigurator.usePhysics().useGraphics();
 
     assetLoaderProvider.get(SpriteSheet.class)
       .addAssetMapping("test", "assets/test_tiles_spritesheet.json");
 
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
 
-    solaEcs.addSystems(solaPhysics.getSystems());
     solaEcs.addSystems(new PlayerSystem());
     solaEcs.setWorld(buildWorld());
-  }
-
-  @Override
-  protected void onRender(Renderer renderer) {
-    renderer.clear();
-
-    solaGraphics.render(renderer);
   }
 
   private World buildWorld() {
