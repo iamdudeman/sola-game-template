@@ -9,8 +9,8 @@ import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
 import technology.sola.engine.defaults.SolaGraphics;
 import technology.sola.engine.defaults.SolaPhysics;
-import technology.sola.engine.defaults.graphics.modules.RectangleGraphicsModule;
-import technology.sola.engine.defaults.graphics.modules.SpriteGraphicsModule;
+import technology.sola.engine.defaults.graphics.modules.RectangleEntityGraphicsModule;
+import technology.sola.engine.defaults.graphics.modules.SpriteEntityGraphicsModule;
 import technology.sola.engine.graphics.Color;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
@@ -35,8 +35,8 @@ public class GameSola extends Sola {
     solaGraphics = new SolaGraphics(solaEcs);
 
     solaGraphics.addGraphicsModules(
-      new RectangleGraphicsModule(),
-      new SpriteGraphicsModule(assetLoaderProvider.get(SpriteSheet.class))
+      new RectangleEntityGraphicsModule(),
+      new SpriteEntityGraphicsModule(assetLoaderProvider.get(SpriteSheet.class))
     );
 
     assetLoaderProvider.get(SpriteSheet.class)
