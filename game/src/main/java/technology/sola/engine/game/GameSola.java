@@ -40,7 +40,7 @@ public class GameSola extends Sola {
     );
 
     assetLoaderProvider.get(SpriteSheet.class)
-      .addAssetMapping("test", "assets/test_tiles_spritesheet.json");
+      .addAssetMapping("test", "assets/test_tiles.sprites.json");
 
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
 

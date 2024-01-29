@@ -25,9 +25,9 @@ public class GameSolaWithDefaults extends SolaWithDefaults {
   protected void onInit(DefaultsConfigurator defaultsConfigurator) {
     defaultsConfigurator.usePhysics().useGraphics();
 
-    assetLoaderProvider.get(SpriteSheet.class)
-      .addAssetMapping("test", "assets/test_tiles_spritesheet.json");
 
+    assetLoaderProvider.get(SpriteSheet.class)
+      .addAssetMapping("test", "assets/test_tiles.sprites.json");
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
 
     solaEcs.addSystems(new PlayerSystem());

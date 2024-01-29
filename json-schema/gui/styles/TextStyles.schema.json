@@ -5,7 +5,7 @@
   "type": "object",
   "allOf": [
     {
-      "$ref": "./BaseStyles.schema.json"
+      "$ref": "BaseStyles.schema.json"
     }
   ],
   "properties": {
@@ -23,7 +23,7 @@
       ]
     },
     "textColor": {
-      "$ref": "./BaseStyles.schema.json#/$defs/color",
+      "$ref": "BaseStyles.schema.json#/$defs/color",
       "description": "The color of the rendered text."
     }
   }
