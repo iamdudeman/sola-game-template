@@ -17,17 +17,22 @@ various
 asset types. These can assist you in creating valid assets for the sola game engine to load when manually creating or
 updating them.
 
+* SpriteSheet
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/SpriteSheet.schema.json
+* Font
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/Font.schema.json
+* GuiDocument
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/GuiDocument.schema.json
+
 ### IntelliJ setup
 
 1. Open settings
 2. Go to `Languages & Frameworks | Schemas and DTDs | JSON Schema Mappings`
 3. Click `+` and select the schema file to add
 4. Add by file path pattern (recommendations below)
-    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/SpriteSheet.schema.json -> *
-      .sprites.json
-    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/Font.schema.json -> *.font.json
-    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/GuiDocument.schema.json -> *
-      .gui.json
+    * SpriteSheet -> `*.sprites.json`
+    * Font -> `*.font.json`
+    * GuiDocument -> `*.gui.json`
 
 ## Packaging for release
 
