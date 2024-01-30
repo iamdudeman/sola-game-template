@@ -8,6 +8,26 @@ Template project for building a game using [sola-game-engine](https://github.com
 * [Swing platform code](swing/src)
 * [JavaFX platform code](javafx/src)
 * [Browser platform code](browser/src)
+* [Server code](server/src)
+
+## JSON Schema
+
+[JSON schema definitions](https://github.com/iamdudeman/sola-game-engine/tree/master/json-schema) are provided for
+various
+asset types. These can assist you in creating valid assets for the sola game engine to load when manually creating or
+updating them.
+
+### IntelliJ setup
+
+1. Open settings
+2. Go to `Languages & Frameworks | Schemas and DTDs | JSON Schema Mappings`
+3. Click `+` and select the schema file to add
+4. Add by file path pattern (recommendations below)
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/SpriteSheet.schema.json -> *
+      .sprites.json
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/Font.schema.json -> *.font.json
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/GuiDocument.schema.json -> *
+      .gui.json
 
 ## Packaging for release
 
@@ -36,9 +56,8 @@ Your users will need to have Java 17 installed to run the jar.
 
 ### Swing + JavaFx .exe
 
-You also have the option to use [jpackage](
-https://docs.oracle.com/en/java/javase/17/jpackage/packaging-overview.html) to create an executable exe file.
-Your users will not need to have Java installed.
+You also have the option to use [jpackage](https://docs.oracle.com/en/java/javase/17/jpackage/packaging-overview.html)
+to create an executable exe file. Your users will not need to have Java installed.
 
 1. Install [JDK 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 2. Update $JAVA_HOME path environment variable
@@ -52,18 +71,3 @@ Your users will not need to have Java installed.
 ```
 
 4. Output will be in the `build/jpackage` directory
-
-## JSON Schema
-
-[JSON schema files](json-schema) are provided for various asset types. These can assist you in creating valid assets for
-the sola game engine to load when manually creating or updating them.
-
-### IntelliJ setup
-
-1. Open settings
-2. Go to `Languages & Frameworks | Schemas and DTDs | JSON Schema Mappings`
-3. Click `+` and select the schema file to add
-4. Add by file path pattern (recommendations below)
-    * SpriteSheet.schema.json -> *.sprites.json
-    * Font.schema.json -> *.font.json
-    * GuiDocument.schema.json -> *.gui.json
