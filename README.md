@@ -44,7 +44,7 @@ Run the following gradle command
 .\gradlew.bat distWebZip
 ```
 
-The output will be at `browser/build/<gameName>-browser-<version>.zip`.
+The output will be at `dist/browser/<gameName>-browser-<version>.zip`.
 This can be deployed to places like `itch.io` when using the "HTML" project type.
 
 ### Swing + JavaFx fat jar
@@ -55,8 +55,8 @@ Run the following gradle command
 .\gradlew.bat distFatJar
 ```
 
-The output will be at `swing/build/<gameName>-swing-<version>.jar`
-and `javafx/build/<gameName>-javafx-<os>-<version>.jar`.
+The output will be at `dist/swing/<gameName>-swing-<version>.jar`
+and `dist/javafx/<gameName>-javafx-<os>-<version>.jar`.
 Your users will need to have Java 17 installed to run the jar.
 
 ### Swing + JavaFx .exe
@@ -75,4 +75,4 @@ to create an executable exe file. Your users will not need to have Java installe
 .\gradlew.bat distFatJarZip
 ```
 
-4. Output will be in the `build/jpackage` directory
+4. Output will be in the `dist` directory
