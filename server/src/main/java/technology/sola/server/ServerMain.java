@@ -8,7 +8,7 @@ public class ServerMain {
   public static void main(String[] args) {
     SolaServer solaServer = new ExampleSolaServer();
 
-    solaServer.start(60000);
+    solaServer.start();
   }
 
   private static class ExampleSolaServer extends SolaServer {
@@ -19,6 +19,16 @@ public class ServerMain {
     @Override
     public void initialize() {
 
+    }
+
+    @Override
+    public int getRestPort() {
+      return 60001;
+    }
+
+    @Override
+    public int getSocketPort() {
+      return 60000;
     }
 
     @Override
