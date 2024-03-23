@@ -2,6 +2,8 @@
 
 Template project for building a game using [sola-game-engine](https://github.com/iamdudeman/sola-game-engine).
 
+A [Design document template](docs/DesignDocument.md) is provided inspired by the content found on [develop.games](https://develop.games/)
+
 ## Project structure
 
 * [Common game code](game/src)
