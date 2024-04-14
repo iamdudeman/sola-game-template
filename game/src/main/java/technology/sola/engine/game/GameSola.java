@@ -1,59 +1,81 @@
 package technology.sola.engine.game;
 
-import technology.sola.ecs.Component;
-import technology.sola.ecs.EcsSystem;
 import technology.sola.ecs.World;
+import technology.sola.engine.assets.BulkAssetLoader;
+import technology.sola.engine.assets.audio.AudioClip;
 import technology.sola.engine.assets.graphics.SpriteSheet;
-import technology.sola.engine.core.Sola;
+import technology.sola.engine.assets.graphics.font.Font;
+import technology.sola.engine.assets.graphics.gui.GuiJsonDocument;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
-import technology.sola.engine.defaults.SolaGraphics;
-import technology.sola.engine.defaults.SolaPhysics;
-import technology.sola.engine.defaults.graphics.modules.RectangleEntityGraphicsModule;
-import technology.sola.engine.defaults.graphics.modules.SpriteEntityGraphicsModule;
+import technology.sola.engine.defaults.SolaWithDefaults;
+import technology.sola.engine.game.components.PlayerComponent;
+import technology.sola.engine.game.event.DuckCollisionEventListener;
+import technology.sola.engine.game.render.LoadingScreen;
+import technology.sola.engine.game.systems.PlayerSystem;
 import technology.sola.engine.graphics.Color;
+import technology.sola.engine.graphics.components.LightComponent;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
+import technology.sola.engine.graphics.gui.style.theme.GuiTheme;
 import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.graphics.screen.AspectMode;
-import technology.sola.engine.input.Key;
 import technology.sola.engine.physics.Material;
 import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
+import technology.sola.engine.physics.event.CollisionEvent;
 
-public class GameSola extends Sola {
-  private SolaGraphics solaGraphics;
-  private SolaPhysics solaPhysics;
+public class GameSola extends SolaWithDefaults {
+  private boolean isLoading = true;
+  private LoadingScreen loadingScreen = new LoadingScreen();
 
   public GameSola() {
     super(SolaConfiguration.build("Game", 800, 600).withTargetUpdatesPerSecond(30));
   }
 
   @Override
-  protected void onInit() {
-    solaPhysics = new SolaPhysics(eventHub);
-    solaGraphics = new SolaGraphics(solaEcs);
-
-    solaGraphics.addGraphicsModules(
-      new RectangleEntityGraphicsModule(),
-      new SpriteEntityGraphicsModule(assetLoaderProvider.get(SpriteSheet.class))
-    );
-
-    assetLoaderProvider.get(SpriteSheet.class)
-      .addAssetMapping("test", "assets/test_tiles.sprites.json");
+  protected void onInit(DefaultsConfigurator defaultsConfigurator) {
+    defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(GuiTheme.getDefaultLightTheme());
 
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
 
-    solaEcs.addSystems(solaPhysics.getSystems());
-    solaEcs.addSystems(new PlayerSystem());
+    eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument, assetLoaderProvider.get(AudioClip.class)));
+
+    solaEcs.addSystems(new PlayerSystem(keyboardInput, solaPhysics));
     solaEcs.setWorld(buildWorld());
   }
 
   @Override
-  protected void onRender(Renderer renderer) {
-    renderer.clear();
+  protected void onAsyncInit(Runnable completeAsyncInit) {
+    new BulkAssetLoader(assetLoaderProvider)
+      .addAsset(SpriteSheet.class, AssetIds.Sprites.Duck.SHEET_ID, "assets/sprites/duck.sprites.json")
+      .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.json")
+      .addAsset(AudioClip.class, AssetIds.Audio.QUACK, "assets/audio/quack.wav")
+      .addAsset(GuiJsonDocument.class, AssetIds.Gui.DUCK_TEXT, "assets/gui/duck_text.gui.json")
+      .loadAll()
+      .onComplete(assets -> {
+        if (assets[2] instanceof AudioClip audioClip) {
+          audioClip.addFinishListener(AudioClip::stop);
+        }
 
-    solaGraphics.render(renderer);
+        if (assets[3] instanceof GuiJsonDocument guiJsonDocument) {
+          guiDocument.setRootElement(guiJsonDocument.rootElement());
+        }
+
+        // finish async load
+        isLoading = false;
+        loadingScreen = null;
+        completeAsyncInit.run();
+      });
+  }
+
+  @Override
+  protected void onRender(Renderer renderer) {
+    if (isLoading) {
+      loadingScreen.drawLoading(renderer);
+    } else {
+      super.onRender(renderer);
+    }
   }
 
   private World buildWorld() {
@@ -61,49 +83,24 @@ public class GameSola extends Sola {
 
     world.createEntity()
       .addComponent(new PlayerComponent())
-      .addComponent(new TransformComponent(200, 300, 1, 1))
-      .addComponent(new SpriteComponent("test", "blue"))
-      .addComponent(ColliderComponent.aabb(16, 16))
+      .addComponent(new TransformComponent(350, 300, 32, 32))
+      .addComponent(new RectangleRendererComponent(Color.BLUE, true))
+      .addComponent(ColliderComponent.aabb())
       .addComponent(new DynamicBodyComponent(new Material(1, 0.1f, 50)))
-      .setName("player");
+      .setName(EntityNames.PLAYER);
+
+    world.createEntity(
+      new TransformComponent(150, 300),
+      new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
+      ColliderComponent.aabb(94, 116)
+    ).setName(EntityNames.DUCK);
 
     world.createEntity()
-      .addComponent(new TransformComponent(150, 400, 400, 75f))
+      .addComponent(new TransformComponent(150, 400, 400, 80f))
       .addComponent(new RectangleRendererComponent(Color.WHITE))
+      .addComponent(new LightComponent(200, Color.WHITE).setOffset(200, -20))
       .addComponent(ColliderComponent.aabb());
 
     return world;
-  }
-
-  private record PlayerComponent() implements Component {
-  }
-
-  private class PlayerSystem extends EcsSystem {
-    @Override
-    public void update(World world, float deltaTime) {
-      for (var entry : world.createView().of(PlayerComponent.class, DynamicBodyComponent.class).getEntries()) {
-        DynamicBodyComponent dynamicBodyComponent = entry.c2();
-
-        if (dynamicBodyComponent.isGrounded()) {
-          if (keyboardInput.isKeyHeld(Key.D) && dynamicBodyComponent.getVelocity().x() < 100) {
-            dynamicBodyComponent.applyForce(300, 0);
-          }
-          if (keyboardInput.isKeyHeld(Key.A) && dynamicBodyComponent.getVelocity().x() > -100) {
-            dynamicBodyComponent.applyForce(-300, 0);
-          }
-        }
-
-        if (dynamicBodyComponent.isGrounded() && keyboardInput.isKeyHeld(Key.SPACE)) {
-          dynamicBodyComponent.applyForce(0, -2500);
-        } else if (dynamicBodyComponent.getVelocity().y() > 0) {
-          dynamicBodyComponent.applyForce(0, 2f * solaPhysics.getGravitySystem().getGravityConstant() * dynamicBodyComponent.getMaterial().getMass());
-        }
-      }
-    }
-
-    @Override
-    public int getOrder() {
-      return 0;
-    }
   }
 }
