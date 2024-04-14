@@ -2,7 +2,9 @@ package technology.sola.engine.game;
 
 import technology.sola.ecs.World;
 import technology.sola.engine.assets.BulkAssetLoader;
+import technology.sola.engine.assets.audio.AudioClip;
 import technology.sola.engine.assets.graphics.SpriteSheet;
+import technology.sola.engine.assets.graphics.font.Font;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
 import technology.sola.engine.defaults.SolaWithDefaults;
@@ -40,10 +42,14 @@ public class GameSola extends SolaWithDefaults {
   @Override
   protected void onAsyncInit(Runnable completeAsyncInit) {
     new BulkAssetLoader(assetLoaderProvider)
-      .addAsset(SpriteSheet.class, "test", "assets/test_tiles.sprites.json")
+      .addAsset(SpriteSheet.class, AssetIds.Sprites.Duck.SHEET_ID, "assets/sprites/duck.sprites.json")
+      .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.json")
+      .addAsset(AudioClip.class, AssetIds.Audio.QUACK, "assets/audio/quack.wav")
       .loadAll()
       .onComplete(assets -> {
-        // todo do things with loaded assets
+        if (assets[2] instanceof AudioClip audioClip) {
+          audioClip.addFinishListener(AudioClip::stop);
+        }
 
         // finish async load
         isLoading = false;
@@ -66,11 +72,17 @@ public class GameSola extends SolaWithDefaults {
 
     world.createEntity()
       .addComponent(new PlayerComponent())
-      .addComponent(new TransformComponent(200, 300, 1, 1))
-      .addComponent(new SpriteComponent("test", "blue"))
-      .addComponent(ColliderComponent.aabb(16, 16))
+      .addComponent(new TransformComponent(350, 300, 32, 32))
+      .addComponent(new RectangleRendererComponent(Color.BLUE, true))
+      .addComponent(ColliderComponent.aabb())
       .addComponent(new DynamicBodyComponent(new Material(1, 0.1f, 50)))
       .setName("player");
+
+    world.createEntity(
+      new TransformComponent(150, 300),
+      new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
+      ColliderComponent.aabb(94, 116)
+    );
 
     world.createEntity()
       .addComponent(new TransformComponent(150, 400, 400, 80f))

@@ -1,0 +1,12 @@
+{
+  "sprites": [
+    {
+      "id": "duck",
+      "x": 4,
+      "y": 12,
+      "w": 114,
+      "h": 116
+    }
+  ],
+  "spriteSheet": "duck.png"
+}
