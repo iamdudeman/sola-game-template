@@ -10,6 +10,7 @@ import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
 import technology.sola.engine.defaults.SolaWithDefaults;
 import technology.sola.engine.game.components.PlayerComponent;
+import technology.sola.engine.game.event.DuckCollisionEventListener;
 import technology.sola.engine.game.render.LoadingScreen;
 import technology.sola.engine.game.systems.PlayerSystem;
 import technology.sola.engine.graphics.Color;
@@ -22,6 +23,7 @@ import technology.sola.engine.graphics.screen.AspectMode;
 import technology.sola.engine.physics.Material;
 import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
+import technology.sola.engine.physics.event.CollisionEvent;
 
 public class GameSola extends SolaWithDefaults {
   private boolean isLoading = true;
@@ -36,6 +38,8 @@ public class GameSola extends SolaWithDefaults {
     defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(GuiTheme.getDefaultLightTheme());
 
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
+
+    eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument, assetLoaderProvider.get(AudioClip.class)));
 
     solaEcs.addSystems(new PlayerSystem(keyboardInput, solaPhysics));
     solaEcs.setWorld(buildWorld());
@@ -83,13 +87,13 @@ public class GameSola extends SolaWithDefaults {
       .addComponent(new RectangleRendererComponent(Color.BLUE, true))
       .addComponent(ColliderComponent.aabb())
       .addComponent(new DynamicBodyComponent(new Material(1, 0.1f, 50)))
-      .setName("player");
+      .setName(EntityNames.PLAYER);
 
     world.createEntity(
       new TransformComponent(150, 300),
       new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
       ColliderComponent.aabb(94, 116)
-    );
+    ).setName(EntityNames.DUCK);
 
     world.createEntity()
       .addComponent(new TransformComponent(150, 400, 400, 80f))
