@@ -5,6 +5,7 @@ import technology.sola.engine.assets.BulkAssetLoader;
 import technology.sola.engine.assets.audio.AudioClip;
 import technology.sola.engine.assets.graphics.SpriteSheet;
 import technology.sola.engine.assets.graphics.font.Font;
+import technology.sola.engine.assets.graphics.gui.GuiJsonDocument;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
 import technology.sola.engine.defaults.SolaWithDefaults;
@@ -15,6 +16,7 @@ import technology.sola.engine.graphics.Color;
 import technology.sola.engine.graphics.components.LightComponent;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
+import technology.sola.engine.graphics.gui.style.theme.GuiTheme;
 import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.graphics.screen.AspectMode;
 import technology.sola.engine.physics.Material;
@@ -31,7 +33,7 @@ public class GameSola extends SolaWithDefaults {
 
   @Override
   protected void onInit(DefaultsConfigurator defaultsConfigurator) {
-    defaultsConfigurator.usePhysics().useGraphics().useGui().useLighting();
+    defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(GuiTheme.getDefaultLightTheme());
 
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
 
@@ -45,10 +47,15 @@ public class GameSola extends SolaWithDefaults {
       .addAsset(SpriteSheet.class, AssetIds.Sprites.Duck.SHEET_ID, "assets/sprites/duck.sprites.json")
       .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.json")
       .addAsset(AudioClip.class, AssetIds.Audio.QUACK, "assets/audio/quack.wav")
+      .addAsset(GuiJsonDocument.class, AssetIds.Gui.DUCK_TEXT, "assets/gui/duck_text.gui.json")
       .loadAll()
       .onComplete(assets -> {
         if (assets[2] instanceof AudioClip audioClip) {
           audioClip.addFinishListener(AudioClip::stop);
+        }
+
+        if (assets[3] instanceof GuiJsonDocument guiJsonDocument) {
+          guiDocument.setRootElement(guiJsonDocument.rootElement());
         }
 
         // finish async load

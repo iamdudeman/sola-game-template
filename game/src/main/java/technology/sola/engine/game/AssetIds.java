@@ -15,6 +15,13 @@ public final class AssetIds {
     }
   }
 
+  public static final class Gui {
+    public static final String DUCK_TEXT = "duck_text";
+
+    private Gui() {
+    }
+  }
+
   public static final class Sprites {
     public static final class Duck {
       public static final String SHEET_ID = "duck";
