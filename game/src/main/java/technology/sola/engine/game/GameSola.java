@@ -19,7 +19,6 @@ import technology.sola.engine.graphics.components.LightComponent;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
 import technology.sola.engine.graphics.gui.style.theme.DefaultThemeBuilder;
-import technology.sola.engine.graphics.gui.style.theme.GuiTheme;
 import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.graphics.screen.AspectMode;
 import technology.sola.engine.physics.Material;
@@ -52,10 +51,10 @@ public class GameSola extends SolaWithDefaults {
   protected void onAsyncInit(Runnable completeAsyncInit) {
     new BulkAssetLoader(assetLoaderProvider)
       .addAsset(SpriteSheet.class, AssetIds.Sprites.Duck.SHEET_ID, "assets/sprites/duck.sprites.json")
-      .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.json")
+      .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.font.json")
       .addAsset(AudioClip.class, AssetIds.Audio.QUACK, "assets/audio/quack.wav")
       .addAsset(GuiJsonDocument.class, AssetIds.Gui.DUCK_TEXT, "assets/gui/duck_text.gui.json")
-      .addAsset(ControlsConfig.class, AssetIds.Controls.PLAYER, "assets/controls/player.controls.json")
+      .addAsset(ControlsConfig.class, AssetIds.Controls.PLAYER, "assets/input/player.controls.json")
       .loadAll()
       .onComplete(assets -> {
         if (assets[2] instanceof AudioClip audioClip) {
