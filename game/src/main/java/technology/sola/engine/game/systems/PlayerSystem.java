@@ -2,18 +2,18 @@ package technology.sola.engine.game.systems;
 
 import technology.sola.ecs.EcsSystem;
 import technology.sola.ecs.World;
+import technology.sola.engine.defaults.SolaControls;
 import technology.sola.engine.defaults.SolaPhysics;
+import technology.sola.engine.game.PlayerControls;
 import technology.sola.engine.game.components.PlayerComponent;
-import technology.sola.engine.input.Key;
-import technology.sola.engine.input.KeyboardInput;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
 
 public class PlayerSystem extends EcsSystem {
-  private final KeyboardInput keyboardInput;
+  private final SolaControls solaControls;
   private final SolaPhysics solaPhysics;
 
-  public PlayerSystem(KeyboardInput keyboardInput, SolaPhysics solaPhysics) {
-    this.keyboardInput = keyboardInput;
+  public PlayerSystem(SolaControls solaControls, SolaPhysics solaPhysics) {
+    this.solaControls = solaControls;
     this.solaPhysics = solaPhysics;
   }
 
@@ -23,15 +23,15 @@ public class PlayerSystem extends EcsSystem {
       DynamicBodyComponent dynamicBodyComponent = entry.c2();
 
       if (dynamicBodyComponent.isGrounded()) {
-        if (keyboardInput.isKeyHeld(Key.D) && dynamicBodyComponent.getVelocity().x() < 100) {
+        if (solaControls.isActive(PlayerControls.RIGHT) && dynamicBodyComponent.getVelocity().x() < 100) {
           dynamicBodyComponent.applyForce(300, 0);
         }
-        if (keyboardInput.isKeyHeld(Key.A) && dynamicBodyComponent.getVelocity().x() > -100) {
+        if (solaControls.isActive(PlayerControls.LEFT) && dynamicBodyComponent.getVelocity().x() > -100) {
           dynamicBodyComponent.applyForce(-300, 0);
         }
       }
 
-      if (dynamicBodyComponent.isGrounded() && keyboardInput.isKeyHeld(Key.SPACE)) {
+      if (dynamicBodyComponent.isGrounded() && solaControls.isActive(PlayerControls.JUMP)) {
         dynamicBodyComponent.applyForce(0, -2500);
       } else if (dynamicBodyComponent.getVelocity().y() > 0) {
         dynamicBodyComponent.applyForce(0, 2f * solaPhysics.getGravitySystem().getGravityConstant() * dynamicBodyComponent.getMaterial().getMass());

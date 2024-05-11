@@ -25,6 +25,8 @@ updating them.
     * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/Font.schema.json
 * GuiDocument
     * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/GuiDocument.schema.json
+* ControlConfig
+    * https://raw.githubusercontent.com/iamdudeman/sola-game-engine/master/json-schema/ControlConfig.schema.json
 
 ### IntelliJ setup
 
@@ -35,6 +37,7 @@ updating them.
     * SpriteSheet -> `*.sprites.json`
     * Font -> `*.font.json`
     * GuiDocument -> `*.gui.json`
+    * ControlConfig -> `*.controls.json`
 
 ## Packaging for release
 
