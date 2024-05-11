@@ -8,6 +8,13 @@ public final class AssetIds {
     }
   }
 
+  public static final class Controls {
+    public static final String PLAYER = "player";
+
+    private Controls() {
+    }
+  }
+
   public static final class Font {
     public static final String MONO_10 = "mono-10";
 

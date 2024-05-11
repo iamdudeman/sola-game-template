@@ -6,6 +6,7 @@ import technology.sola.engine.assets.audio.AudioClip;
 import technology.sola.engine.assets.graphics.SpriteSheet;
 import technology.sola.engine.assets.graphics.font.Font;
 import technology.sola.engine.assets.graphics.gui.GuiJsonDocument;
+import technology.sola.engine.assets.input.ControlsConfig;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
 import technology.sola.engine.defaults.SolaWithDefaults;
@@ -26,6 +27,7 @@ import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
 import technology.sola.engine.physics.component.collider.ColliderShapeAABB;
 import technology.sola.engine.physics.event.CollisionEvent;
+import technology.sola.engine.physics.utils.ColliderUtils;
 
 public class GameSola extends SolaWithDefaults {
   private boolean isLoading = true;
@@ -43,8 +45,7 @@ public class GameSola extends SolaWithDefaults {
 
     eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument, assetLoaderProvider.get(AudioClip.class)));
 
-    solaEcs.addSystems(new PlayerSystem(keyboardInput, solaPhysics));
-    solaEcs.setWorld(buildWorld());
+    solaEcs.addSystems(new PlayerSystem(solaControls, solaPhysics));
   }
 
   @Override
@@ -54,6 +55,7 @@ public class GameSola extends SolaWithDefaults {
       .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.json")
       .addAsset(AudioClip.class, AssetIds.Audio.QUACK, "assets/audio/quack.wav")
       .addAsset(GuiJsonDocument.class, AssetIds.Gui.DUCK_TEXT, "assets/gui/duck_text.gui.json")
+      .addAsset(ControlsConfig.class, AssetIds.Controls.PLAYER, "assets/controls/player.controls.json")
       .loadAll()
       .onComplete(assets -> {
         if (assets[2] instanceof AudioClip audioClip) {
@@ -64,7 +66,12 @@ public class GameSola extends SolaWithDefaults {
           guiDocument.setRootElement(guiJsonDocument.rootElement());
         }
 
+        if (assets[4] instanceof ControlsConfig controlsConfig) {
+          solaControls.addControls(controlsConfig);
+        }
+
         // finish async load
+        solaEcs.setWorld(buildWorld());
         isLoading = false;
         loadingScreen = null;
         completeAsyncInit.run();
@@ -91,11 +98,14 @@ public class GameSola extends SolaWithDefaults {
       .addComponent(new DynamicBodyComponent(new Material(1, 0.1f, 50)))
       .setName(EntityNames.PLAYER);
 
-    world.createEntity(
-      new TransformComponent(150, 300),
-      new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
-      new ColliderComponent(new ColliderShapeAABB(94, 116))
-    ).setName(EntityNames.DUCK);
+    ColliderUtils.autoSizeColliderToSprite(
+      world.createEntity(
+        new TransformComponent(150, 300),
+        new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
+        new ColliderComponent(new ColliderShapeAABB())
+      ).setName(EntityNames.DUCK),
+      assetLoaderProvider.get(SpriteSheet.class)
+    );
 
     world.createEntity()
       .addComponent(new TransformComponent(150, 400, 400, 80f))
