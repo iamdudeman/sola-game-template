@@ -17,12 +17,14 @@ import technology.sola.engine.graphics.Color;
 import technology.sola.engine.graphics.components.LightComponent;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
+import technology.sola.engine.graphics.gui.style.theme.DefaultThemeBuilder;
 import technology.sola.engine.graphics.gui.style.theme.GuiTheme;
 import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.graphics.screen.AspectMode;
 import technology.sola.engine.physics.Material;
 import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
+import technology.sola.engine.physics.component.collider.ColliderShapeAABB;
 import technology.sola.engine.physics.event.CollisionEvent;
 
 public class GameSola extends SolaWithDefaults {
@@ -35,7 +37,7 @@ public class GameSola extends SolaWithDefaults {
 
   @Override
   protected void onInit(DefaultsConfigurator defaultsConfigurator) {
-    defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(GuiTheme.getDefaultLightTheme());
+    defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(DefaultThemeBuilder.buildLightTheme());
 
     platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
 
@@ -85,21 +87,21 @@ public class GameSola extends SolaWithDefaults {
       .addComponent(new PlayerComponent())
       .addComponent(new TransformComponent(350, 300, 32, 32))
       .addComponent(new RectangleRendererComponent(Color.BLUE, true))
-      .addComponent(ColliderComponent.aabb())
+      .addComponent(new ColliderComponent(new ColliderShapeAABB()))
       .addComponent(new DynamicBodyComponent(new Material(1, 0.1f, 50)))
       .setName(EntityNames.PLAYER);
 
     world.createEntity(
       new TransformComponent(150, 300),
       new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
-      ColliderComponent.aabb(94, 116)
+      new ColliderComponent(new ColliderShapeAABB(94, 116))
     ).setName(EntityNames.DUCK);
 
     world.createEntity()
       .addComponent(new TransformComponent(150, 400, 400, 80f))
       .addComponent(new RectangleRendererComponent(Color.WHITE))
       .addComponent(new LightComponent(200, Color.WHITE).setOffset(200, -20))
-      .addComponent(ColliderComponent.aabb());
+      .addComponent(new ColliderComponent(new ColliderShapeAABB()));
 
     return world;
   }
