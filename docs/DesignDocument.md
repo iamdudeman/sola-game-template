@@ -12,24 +12,25 @@ todo
 
 todo
 
-### Player experience
-
-#### First minutes
-
-todo
-
-#### Target audience
-
-todo
-
 ### Platform
 
 - [ ] Browser
 - [ ] Windows
 - [ ] Mac
 - [ ] Linux
+- [ ] Android
 
 ### Genre
+
+todo
+
+### Player experience
+
+#### Target audience
+
+todo
+
+#### First minutes
 
 todo
 
@@ -41,11 +42,19 @@ todo
 
 todo
 
+#### Mechanics / Systems overview
+
+todo combat, puzzles, collectibles, progression, etc.
+
 ### Story overview
 
 todo
 
-### Mechanics / Systems overview
+#### Character(s)
+
+todo
+
+#### World / environment
 
 todo
 
@@ -54,6 +63,10 @@ todo
 ## Art
 
 ### Style
+
+todo
+
+### Camera
 
 todo
 
@@ -77,13 +90,15 @@ todo
 
 todo
 
-### UIw
+### UI
 
 todo
 
 ------------------------------------------------------------------------------------------------------------------------
 
 ## Proof of concept outline
+
+### Legend
 
 * Type
     * `Art`   : Art related assets
@@ -95,9 +110,11 @@ todo
     * `WIP`   : This task is currently in progress
     * `DONE`  : This task has been completed
 
-| Task            | Type    | Status  | Details                                          |
-|-----------------|---------|---------|--------------------------------------------------|
-| Design Document | `Misc`  | `TODO`  |                                                  |
-| Art example     | `Art`   | `WIP`   | An example work in progress art task             |
-| Audio example   | `Audio` | `DONE`  | An example completed audio task                  |
-| Coding example  | `Code`  | `TODO`  | An example coding task that has not been started |
+### Outline
+
+| Task            | Type    | Status | Details                                          |
+|-----------------|---------|--------|--------------------------------------------------|
+| Design Document | `Misc`  | `TODO` |                                                  |
+| Art example     | `Art`   | `WIP`  | An example work in progress art task             |
+| Audio example   | `Audio` | `DONE` | An example completed audio task                  |
+| Coding example  | `Code`  | `TODO` | An example coding task that has not been started |
