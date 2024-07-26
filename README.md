@@ -1,4 +1,4 @@
-# sola-game-template
+# [<img src="/sola-logo.jpg" width="64"/>](/sola-logo.jpg) sola-game-template
 
 Template project for building a game using [sola-game-engine](https://github.com/iamdudeman/sola-game-engine).
 
