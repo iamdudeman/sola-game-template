@@ -1,8 +1,27 @@
-# [<img src="/sola-logo.jpg" width="64"/>](/sola-logo.jpg) sola-game-template
+# [<img src="/assets/icon.jpg" width="64"/>](/assets/icon.jpg) sola-game-template
 
 Template project for building a game using [sola-game-engine](https://github.com/iamdudeman/sola-game-engine).
 
 A [Design document template](docs/DesignDocument.md) is provided inspired by the content found on [develop.games](https://develop.games/)
+
+## New project todo list
+
+[//]: # (todo: complete this Todo list)
+
+* [ ] Update [gradle.properties](gradle.properties)
+    * basePackage -> base Java source package (ex. `com.your.game`)
+    * gameName -> name of the game
+    * vendor -> your name / company
+* [ ] Remove `server` project if not needed
+    * Remove `server` from [settings.gradle.kts](settings.gradle.kts)
+    * Delete [server](server)
+    * Remove from [project structure section](#project-structure)
+* [ ] Update [design document](docs/DesignDocument.md)
+* [ ] Update the icons
+    * [assets/icon.ico](assets/icon.ico) : used by browser
+    * [assets/icon.jpg](assets/icon.jpg) : used by desktop (can also be a .png)
+    * Also, the image at the top of this README.md file!
+* [ ] Update README to remove "sola-game-template" wording
 
 ## Project structure
 

@@ -1,3 +1,4 @@
+[//]: # (todo: real title)
 # TODO Design Document
 
 ------------------------------------------------------------------------------------------------------------------------
@@ -6,14 +7,15 @@
 
 ### "Elevator pitch" / Game summary
 
-todo
+[//]: # (todo: content)
 
 ### Inspiration
 
-todo
+[//]: # (todo: content)
 
 ### Platform
 
+[//]: # (todo: fill out)
 - [ ] Browser
 - [ ] Windows
 - [ ] Mac
@@ -22,17 +24,17 @@ todo
 
 ### Genre
 
-todo
+[//]: # (todo: content)
 
 ### Player experience
 
 #### Target audience
 
-todo
+[//]: # (todo: content)
 
 #### First minutes
 
-todo
+[//]: # (todo: content)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -40,23 +42,23 @@ todo
 
 ### Gameplay overview
 
-todo
+[//]: # (todo: content)
 
 #### Mechanics / Systems overview
 
-todo combat, puzzles, collectibles, progression, etc.
+[//]: # (todo: content combat, puzzles, collectibles, progression, etc.)
 
 ### Story overview
 
-todo
+[//]: # (todo: content)
 
 #### Character(s)
 
-todo
+[//]: # (todo: content)
 
 #### World / environment
 
-todo
+[//]: # (todo: content)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -64,11 +66,11 @@ todo
 
 ### Style
 
-todo
+[//]: # (todo: content)
 
 ### Camera
 
-todo
+[//]: # (todo: content)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -76,11 +78,11 @@ todo
 
 ### Music
 
-todo
+[//]: # (todo: content)
 
 ### Sound effects
 
-todo
+[//]: # (todo: content)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -88,11 +90,11 @@ todo
 
 ### Controls
 
-todo
+[//]: # (todo: content)
 
 ### UI
 
-todo
+[//]: # (todo: content)
 
 ------------------------------------------------------------------------------------------------------------------------
 
@@ -111,6 +113,8 @@ todo
     * `DONE`  : This task has been completed
 
 ### Outline
+
+[//]: # (todo: populate the outline)
 
 | Task            | Type    | Status | Details                                          |
 |-----------------|---------|--------|--------------------------------------------------|
