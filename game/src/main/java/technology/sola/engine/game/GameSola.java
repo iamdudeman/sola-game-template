@@ -33,7 +33,7 @@ public class GameSola extends SolaWithDefaults {
   private LoadingScreen loadingScreen = new LoadingScreen();
 
   public GameSola() {
-    super(SolaConfiguration.build("Game", 800, 600).withTargetUpdatesPerSecond(30));
+    super(new SolaConfiguration("Game", 800, 600, 30));
   }
 
   @Override
