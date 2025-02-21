@@ -12,6 +12,7 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
     * basePackage -> base Java source package (ex. `com.your.game`)
     * gameName -> name of the game
     * vendor -> your name / company
+* [ ] Update project name in [settings.gradle.kts](settings.gradle.kts)
 * [ ] Remove `server` project if not needed
     * Remove `server` from [settings.gradle.kts](settings.gradle.kts)
     * Delete [server](server)
