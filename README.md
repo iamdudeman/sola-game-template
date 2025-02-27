@@ -13,6 +13,7 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
     * gameName -> name of the game
     * vendor -> your name / company
 * [ ] Update project name in [settings.gradle.kts](settings.gradle.kts)
+* [ ] Update SolaConfiguration in [GameSola.java](game/src/main/java/technology/sola/engine/game/GameSola.java)
 * [ ] Remove `server` project if not needed
     * Remove `server` from [settings.gradle.kts](settings.gradle.kts)
     * Delete [server](server)
