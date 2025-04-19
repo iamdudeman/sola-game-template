@@ -32,6 +32,7 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
 * [JavaFX platform code](javafx/src)
 * [Browser platform code](browser/src)
 * [Server code](server/src)
+* [Editor code](editor/src)
 
 ## JSON Schema
 
