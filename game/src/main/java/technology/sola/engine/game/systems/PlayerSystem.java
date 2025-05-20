@@ -1,5 +1,6 @@
 package technology.sola.engine.game.systems;
 
+import org.jspecify.annotations.NullMarked;
 import technology.sola.ecs.EcsSystem;
 import technology.sola.ecs.World;
 import technology.sola.engine.defaults.SolaControls;
@@ -8,6 +9,7 @@ import technology.sola.engine.game.PlayerControls;
 import technology.sola.engine.game.components.PlayerComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
 
+@NullMarked
 public class PlayerSystem extends EcsSystem {
   private final SolaControls solaControls;
   private final SolaPhysics solaPhysics;
