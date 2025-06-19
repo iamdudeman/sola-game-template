@@ -40,11 +40,11 @@ public class GameSola extends SolaWithDefaults {
   protected void onInit(DefaultsConfigurator defaultsConfigurator) {
     defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(DefaultThemeBuilder.buildLightTheme());
 
-    platform.getViewport().setAspectMode(AspectMode.MAINTAIN);
+    platform().getViewport().setAspectMode(AspectMode.MAINTAIN);
 
-    eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument, assetLoaderProvider.get(AudioClip.class)));
+    eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument(), assetLoaderProvider.get(AudioClip.class)));
 
-    solaEcs.addSystems(new PlayerSystem(solaControls, solaPhysics));
+    solaEcs.addSystems(new PlayerSystem(solaControls, solaPhysics()));
   }
 
   @Override
@@ -62,7 +62,7 @@ public class GameSola extends SolaWithDefaults {
         }
 
         if (assets[3] instanceof GuiJsonDocument guiJsonDocument) {
-          guiDocument.setRootElement(guiJsonDocument.rootElement());
+          guiDocument().setRootElement(guiJsonDocument.rootElement());
         }
 
         if (assets[4] instanceof ControlsConfig controlsConfig) {

@@ -1,9 +1,10 @@
 import technology.sola.plugins.SolaJavaDistributionPluginExtension
 
 plugins {
-  id("sola.java-conventions")
+  id("java")
 }
 
+apply(plugin = "technology.sola.plugins.sola-java-conventions")
 apply(plugin = "technology.sola.plugins.sola-java-distribution")
 
 dependencies {
