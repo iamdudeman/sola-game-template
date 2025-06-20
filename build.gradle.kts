@@ -2,6 +2,7 @@ subprojects {
   buildscript {
     repositories {
       gradlePluginPortal()
+      google()
 
       maven {
         url = uri("https://jitpack.io")
@@ -9,7 +10,10 @@ subprojects {
     }
 
     dependencies {
-      classpath("gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.7.2")
+      classpath("com.android.tools.build:gradle:8.10.1")
+
+      classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-android-conventions.gradle.plugin:${project.properties["solaVersion"]}")
+      classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-android-app.gradle.plugin:${project.properties["solaVersion"]}")
       classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-java-conventions.gradle.plugin:${project.properties["solaVersion"]}")
       classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-java-distribution.gradle.plugin:${project.properties["solaVersion"]}")
       classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-web-distribution.gradle.plugin:${project.properties["solaVersion"]}")
