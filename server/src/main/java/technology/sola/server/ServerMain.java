@@ -3,8 +3,15 @@ package technology.sola.server;
 import technology.sola.engine.networking.socket.SocketMessage;
 import technology.sola.engine.server.ClientConnection;
 import technology.sola.engine.server.SolaServer;
+import technology.sola.logging.JavaSolaLoggerFactory;
+import technology.sola.logging.SolaLogLevel;
+import technology.sola.logging.SolaLogger;
 
 public class ServerMain {
+  static {
+    SolaLogger.configure(SolaLogLevel.WARNING, new JavaSolaLoggerFactory());
+  }
+
   public static void main(String[] args) {
     SolaServer solaServer = new ExampleSolaServer();
 
