@@ -6,6 +6,8 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
 
 ## New project todo list
 
+[//]: # (todo add stuff for Android project too)
+
 [//]: # (todo: complete this Todo list)
 
 * [ ] Update [gradle.properties](gradle.properties)
