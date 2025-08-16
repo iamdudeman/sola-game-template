@@ -22,6 +22,7 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
 * [ ] Update the icons
     * [assets/icon.ico](assets/icon.ico) : used by browser
     * [assets/icon.jpg](assets/icon.jpg) : used by desktop (can also be a .png)
+    * [android/src/main/res/mipmap/icon.png](android/src/main/res/mipmap/icon.png) : used by Android
     * Also, the image at the top of this README.md file!
 * [ ] Update README to remove "sola-game-template" wording
 
@@ -103,3 +104,26 @@ to create an executable exe file. Your users will not need to have Java installe
 ```
 
 4. Output will be in the `dist` directory
+
+### Android
+
+#### Debug
+
+1. Run the following gradle command
+
+```shell
+.\gradlew.bat distAndroidDebugApk
+```
+
+#### Release
+
+1. Increase the androidVersionCode in [gradle.properties](gradle.properties)
+2. Create an upload keystore file
+    1. https://developer.android.com/studio/publish/app-signing#sign_release
+3. Create a copy of [keystore.example.properties](keystore.example.properties) as `keystore.properties`
+4. Update the `keystore.properties` file with your keystore information
+5. Run the following gradle command
+
+```shell
+.\gradlew.bat distAndroidReleaseBundle
+```
