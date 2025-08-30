@@ -12,6 +12,7 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
     * basePackage -> base Java source package (ex. `com.your.game`)
     * gameName -> name of the game
     * vendor -> your name / company
+* [ ] Update the Android app name in [strings.xml](android/src/main/res/values/strings.xml)
 * [ ] Update project name in [settings.gradle.kts](settings.gradle.kts)
 * [ ] Update SolaConfiguration in [GameSola.java](game/src/main/java/technology/sola/engine/game/GameSola.java)
 * [ ] Remove `server` project if not needed
