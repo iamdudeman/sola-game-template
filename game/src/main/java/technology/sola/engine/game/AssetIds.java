@@ -1,5 +1,8 @@
 package technology.sola.engine.game;
 
+import org.jspecify.annotations.NullMarked;
+
+@NullMarked
 public final class AssetIds {
   public static final class Audio {
     public static final String QUACK = "quack";
