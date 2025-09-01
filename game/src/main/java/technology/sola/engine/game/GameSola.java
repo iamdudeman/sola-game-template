@@ -1,5 +1,7 @@
 package technology.sola.engine.game;
 
+import org.jspecify.annotations.NullMarked;
+import org.jspecify.annotations.Nullable;
 import technology.sola.ecs.World;
 import technology.sola.engine.assets.BulkAssetLoader;
 import technology.sola.engine.assets.audio.AudioClip;
@@ -28,8 +30,9 @@ import technology.sola.engine.physics.component.collider.ColliderShapeAABB;
 import technology.sola.engine.physics.event.CollisionEvent;
 import technology.sola.engine.physics.utils.ColliderUtils;
 
+@NullMarked
 public class GameSola extends SolaWithDefaults {
-  private boolean isLoading = true;
+  @Nullable
   private LoadingScreen loadingScreen = new LoadingScreen();
 
   public GameSola() {
@@ -45,10 +48,7 @@ public class GameSola extends SolaWithDefaults {
     eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument(), assetLoaderProvider.get(AudioClip.class)));
 
     solaEcs.addSystems(new PlayerSystem(solaControls, solaPhysics()));
-  }
 
-  @Override
-  protected void onAsyncInit(Runnable completeAsyncInit) {
     new BulkAssetLoader(assetLoaderProvider)
       .addAsset(SpriteSheet.class, AssetIds.Sprites.Duck.SHEET_ID, "assets/sprites/duck.sprites.json")
       .addAsset(Font.class, AssetIds.Font.MONO_10, "assets/font/monospaced_NORMAL_10.font.json")
@@ -71,15 +71,13 @@ public class GameSola extends SolaWithDefaults {
 
         // finish async load
         solaEcs.setWorld(buildWorld());
-        isLoading = false;
         loadingScreen = null;
-        completeAsyncInit.run();
       });
   }
 
   @Override
   protected void onRender(Renderer renderer) {
-    if (isLoading) {
+    if (loadingScreen != null) {
       loadingScreen.drawLoading(renderer);
     } else {
       super.onRender(renderer);
