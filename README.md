@@ -33,6 +33,7 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
 * [Swing platform code](swing/src)
 * [JavaFX platform code](javafx/src)
 * [Browser platform code](browser/src)
+* [Android platform code](android/src)
 * [Server code](server/src)
 * [Editor code](editor/src)
 
