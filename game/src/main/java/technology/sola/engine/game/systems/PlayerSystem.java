@@ -3,19 +3,20 @@ package technology.sola.engine.game.systems;
 import org.jspecify.annotations.NullMarked;
 import technology.sola.ecs.EcsSystem;
 import technology.sola.ecs.World;
-import technology.sola.engine.defaults.SolaPhysics;
-import technology.sola.engine.game.PlayerControls;
 import technology.sola.engine.game.components.PlayerComponent;
-import technology.sola.engine.input.SolaControls;
+import technology.sola.engine.input.Key;
+import technology.sola.engine.input.KeyboardInput;
+import technology.sola.engine.physics.SolaPhysics;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
+import technology.sola.math.linear.Vector2D;
 
 @NullMarked
 public class PlayerSystem extends EcsSystem {
-  private final SolaControls solaControls;
+  private final KeyboardInput keyboardInput;
   private final SolaPhysics solaPhysics;
 
-  public PlayerSystem(SolaControls solaControls, SolaPhysics solaPhysics) {
-    this.solaControls = solaControls;
+  public PlayerSystem(KeyboardInput keyboardInput, SolaPhysics solaPhysics) {
+    this.keyboardInput = keyboardInput;
     this.solaPhysics = solaPhysics;
   }
 
@@ -25,24 +26,19 @@ public class PlayerSystem extends EcsSystem {
       DynamicBodyComponent dynamicBodyComponent = entry.c2();
 
       if (dynamicBodyComponent.isGrounded()) {
-        if (solaControls.isActive(PlayerControls.RIGHT) && dynamicBodyComponent.getVelocity().x() < 100) {
+        if ((keyboardInput.isKeyHeld(Key.D) || keyboardInput.isKeyHeld(Key.RIGHT)) && dynamicBodyComponent.getVelocity().x() < 100) {
           dynamicBodyComponent.applyForce(300, 0);
         }
-        if (solaControls.isActive(PlayerControls.LEFT) && dynamicBodyComponent.getVelocity().x() > -100) {
+        if ((keyboardInput.isKeyHeld(Key.A) || keyboardInput.isKeyHeld(Key.LEFT)) && dynamicBodyComponent.getVelocity().x() > -100) {
           dynamicBodyComponent.applyForce(-300, 0);
         }
       }
 
-      if (dynamicBodyComponent.isGrounded() && solaControls.isActive(PlayerControls.JUMP)) {
-        dynamicBodyComponent.applyForce(0, -2500);
+      if (dynamicBodyComponent.isGrounded() && keyboardInput.isKeyHeld(Key.SPACE)) {
+        dynamicBodyComponent.setVelocity(new Vector2D(dynamicBodyComponent.getVelocity().x(), -100));
       } else if (dynamicBodyComponent.getVelocity().y() > 0) {
-        dynamicBodyComponent.applyForce(0, 2f * solaPhysics.getGravitySystem().getGravityConstant() * dynamicBodyComponent.getMaterial().getMass());
+        dynamicBodyComponent.applyForce(0, 5f * solaPhysics.getGravitySystem().getGravityConstant() * dynamicBodyComponent.getMaterial().getMass());
       }
     }
-  }
-
-  @Override
-  public int getOrder() {
-    return 0;
   }
 }
