@@ -8,15 +8,15 @@ import technology.sola.engine.assets.audio.AudioClip;
 import technology.sola.engine.assets.graphics.font.Font;
 import technology.sola.engine.assets.graphics.gui.GuiJsonDocument;
 import technology.sola.engine.assets.graphics.spritesheet.SpriteSheet;
-import technology.sola.engine.assets.input.ControlsConfig;
+import technology.sola.engine.core.Sola;
 import technology.sola.engine.core.SolaConfiguration;
 import technology.sola.engine.core.component.TransformComponent;
-import technology.sola.engine.defaults.SolaWithDefaults;
 import technology.sola.engine.game.components.PlayerComponent;
 import technology.sola.engine.game.event.DuckCollisionEventListener;
 import technology.sola.engine.game.render.LoadingScreen;
 import technology.sola.engine.game.systems.PlayerSystem;
 import technology.sola.engine.graphics.Color;
+import technology.sola.engine.graphics.SolaGraphics;
 import technology.sola.engine.graphics.components.LightComponent;
 import technology.sola.engine.graphics.components.RectangleRendererComponent;
 import technology.sola.engine.graphics.components.SpriteComponent;
@@ -24,6 +24,7 @@ import technology.sola.engine.graphics.gui.style.theme.DefaultThemeBuilder;
 import technology.sola.engine.graphics.renderer.Renderer;
 import technology.sola.engine.graphics.screen.AspectMode;
 import technology.sola.engine.physics.Material;
+import technology.sola.engine.physics.SolaPhysics;
 import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
 import technology.sola.engine.physics.component.collider.ColliderShapeAABB;
@@ -31,23 +32,31 @@ import technology.sola.engine.physics.event.CollisionEvent;
 import technology.sola.engine.physics.utils.ColliderUtils;
 
 @NullMarked
-public class GameSola extends SolaWithDefaults {
+public class GameSola extends Sola {
   @Nullable
   private LoadingScreen loadingScreen = new LoadingScreen();
+  private SolaPhysics solaPhysics;
+  private SolaGraphics solaGraphics;
 
   public GameSola() {
     super(new SolaConfiguration("Game", 800, 600, 30));
   }
 
   @Override
-  protected void onInit(DefaultsConfigurator defaultsConfigurator) {
-    defaultsConfigurator.usePhysics().useGraphics().useLighting().useGui(DefaultThemeBuilder.buildLightTheme());
+  protected void onInit() {
+    solaPhysics = new SolaPhysics.Builder(solaEcs)
+      .buildAndInitialize(eventHub);
+
+    solaGraphics = new SolaGraphics.Builder(platform(), solaEcs)
+      .withGui(mouseInput, DefaultThemeBuilder.buildLightTheme())
+      .withLighting()
+      .buildAndInitialize(assetLoaderProvider);
 
     platform().getViewport().setAspectMode(AspectMode.MAINTAIN);
 
-    eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(guiDocument(), assetLoaderProvider.get(AudioClip.class)));
+    eventHub.add(CollisionEvent.class, new DuckCollisionEventListener(solaGraphics.guiDocument(), assetLoaderProvider.get(AudioClip.class)));
 
-    solaEcs.addSystems(new PlayerSystem(keyboardInput, solaPhysics()));
+    solaEcs.addSystems(new PlayerSystem(keyboardInput, solaPhysics));
 
     new BulkAssetLoader(assetLoaderProvider)
       .addAsset(SpriteSheet.class, AssetIds.Sprites.Duck.SHEET_ID, "assets/sprites/duck.sprites.json")
@@ -61,12 +70,19 @@ public class GameSola extends SolaWithDefaults {
         }
 
         if (assets[3] instanceof GuiJsonDocument guiJsonDocument) {
-          guiDocument().setRootElement(guiJsonDocument.rootElement());
+          solaGraphics.guiDocument().setRootElement(guiJsonDocument.rootElement());
         }
 
         // finish async load
         solaEcs.setWorld(buildWorld());
         loadingScreen = null;
+
+        if (assets[0] instanceof SpriteSheet spriteSheet) {
+          ColliderUtils.autoSizeColliderToSprite(
+            solaEcs.getWorld().findEntityByName(EntityNames.DUCK),
+            spriteSheet
+          );
+        }
       });
   }
 
@@ -75,7 +91,7 @@ public class GameSola extends SolaWithDefaults {
     if (loadingScreen != null) {
       loadingScreen.drawLoading(renderer);
     } else {
-      super.onRender(renderer);
+      solaGraphics.render(renderer);
     }
   }
 
@@ -90,14 +106,11 @@ public class GameSola extends SolaWithDefaults {
       .addComponent(new DynamicBodyComponent(new Material(1, 0.1f, 50)))
       .setName(EntityNames.PLAYER);
 
-    ColliderUtils.autoSizeColliderToSprite(
-      world.createEntity(
-        new TransformComponent(150, 300),
-        new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
-        new ColliderComponent(new ColliderShapeAABB())
-      ).setName(EntityNames.DUCK),
-      assetLoaderProvider.get(SpriteSheet.class)
-    );
+    world.createEntity(
+      new TransformComponent(150, 300),
+      new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
+      new ColliderComponent(new ColliderShapeAABB())
+    ).setName(EntityNames.DUCK);
 
     world.createEntity()
       .addComponent(new TransformComponent(150, 400, 400, 80f))
