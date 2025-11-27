@@ -8,6 +8,7 @@ import technology.sola.engine.input.Key;
 import technology.sola.engine.input.KeyboardInput;
 import technology.sola.engine.physics.SolaPhysics;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
+import technology.sola.math.linear.Vector2D;
 
 @NullMarked
 public class PlayerSystem extends EcsSystem {
@@ -34,15 +35,10 @@ public class PlayerSystem extends EcsSystem {
       }
 
       if (dynamicBodyComponent.isGrounded() && keyboardInput.isKeyHeld(Key.SPACE)) {
-        dynamicBodyComponent.applyForce(0, -2500);
+        dynamicBodyComponent.setVelocity(new Vector2D(dynamicBodyComponent.getVelocity().x(), -100));
       } else if (dynamicBodyComponent.getVelocity().y() > 0) {
-        dynamicBodyComponent.applyForce(0, 2f * solaPhysics.getGravitySystem().getGravityConstant() * dynamicBodyComponent.getMaterial().getMass());
+        dynamicBodyComponent.applyForce(0, 5f * solaPhysics.getGravitySystem().getGravityConstant() * dynamicBodyComponent.getMaterial().getMass());
       }
     }
-  }
-
-  @Override
-  public int getOrder() {
-    return 0;
   }
 }
