@@ -1,6 +1,7 @@
 import technology.sola.plugins.SolaJavaDistributionPluginExtension
 
 apply(plugin = "technology.sola.plugins.sola-java-conventions")
+apply(plugin = "technology.sola.plugins.sola-javafx")
 apply(plugin = "technology.sola.plugins.sola-java-distribution")
 
 configure<JavaPluginExtension> {
@@ -10,5 +11,5 @@ configure<JavaPluginExtension> {
 
 configure<SolaJavaDistributionPluginExtension> {
   mainClass = "${project.properties["basePackage"]}.${project.name}.JavaFxMain"
-  useJavaFx = true
+  includeOsClassifier = true
 }
