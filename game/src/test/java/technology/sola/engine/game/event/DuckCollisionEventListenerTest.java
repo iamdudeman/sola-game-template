@@ -46,7 +46,7 @@ class DuckCollisionEventListenerTest {
       .onEvent(new CollisionEvent(new CollisionManifold(
         mockEntity,
         mockEntity2,
-        Vector2D.ZERO_VECTOR,
+        Vector2D.zeroVector(),
         1
       )));
 
@@ -63,7 +63,7 @@ class DuckCollisionEventListenerTest {
       .onEvent(new CollisionEvent(new CollisionManifold(
         mockEntity,
         mockEntity2,
-        Vector2D.ZERO_VECTOR,
+        Vector2D.zeroVector(),
         1
       )));
 
