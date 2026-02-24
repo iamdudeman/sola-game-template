@@ -20,4 +20,10 @@ subprojects {
       classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-web-distribution.gradle.plugin:${project.properties["solaVersion"]}")
     }
   }
+
+  tasks.withType<JavaExec>().configureEach {
+    if (name.endsWith("main()")) {
+      notCompatibleWithConfigurationCache("JavaExec created by IntelliJ")
+    }
+  }
 }
