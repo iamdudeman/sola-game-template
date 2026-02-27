@@ -23,7 +23,9 @@ A [Design document template](docs/DesignDocument.md) is provided inspired by the
 * [ ] Update the icons
     * [assets/icon.ico](assets/icon.ico) : used by browser
     * [assets/icon.jpg](assets/icon.jpg) : used by desktop (can also be a .png)
-    * [android/src/main/res/mipmap/icon.png](android/src/main/res/mipmap/icon.png) : used by Android
+    * [android/src/main/res/mipmap-*](android/src/main/res) : used by Android
+        * Android studio and IntelliJ both have tools for generating all the different variations from a foreground and
+          background image
     * Also, the image at the top of this README.md file!
 * [ ] Update README to remove "sola-game-template" wording
 
