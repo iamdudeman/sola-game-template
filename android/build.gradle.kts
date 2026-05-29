@@ -1,9 +1,9 @@
-import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import com.android.build.api.dsl.ApplicationExtension
 
 apply(plugin = "technology.sola.plugins.sola-android-conventions")
 apply(plugin = "technology.sola.plugins.sola-android-app")
 
-configure<BaseAppModuleExtension> {
+configure<ApplicationExtension> {
   dependencies.add("implementation", "com.github.iamdudeman.sola-game-engine:platform-android:${project.properties["solaVersion"]}")
   dependencies.add("implementation", project(":game"))
 }
