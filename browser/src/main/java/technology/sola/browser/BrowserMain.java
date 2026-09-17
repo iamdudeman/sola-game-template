@@ -1,7 +1,6 @@
 package technology.sola.browser;
 
 import technology.sola.engine.game.GameSola;
-import technology.sola.engine.graphics.Color;
 import technology.sola.engine.platform.browser.BrowserSolaPlatform;
 import technology.sola.engine.platform.browser.BrowserSolaPlatformConfig;
 import technology.sola.engine.platform.browser.core.BrowserSolaLoggerFactory;
@@ -14,9 +13,8 @@ public class BrowserMain {
   }
 
   public static void main(String[] args) {
-    var solaPlatform = new BrowserSolaPlatform(
-      new BrowserSolaPlatformConfig(true, Color.BLACK, true)
-    );
+    var platformConfig = new BrowserSolaPlatformConfig();
+    var solaPlatform = new BrowserSolaPlatform(platformConfig);
     var sola = new GameSola();
 
     solaPlatform.play(sola);

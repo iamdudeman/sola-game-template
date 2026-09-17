@@ -1,7 +1,6 @@
 package technology.sola.swing;
 
 import technology.sola.engine.game.GameSola;
-import technology.sola.engine.graphics.Color;
 import technology.sola.engine.platform.swing.SwingSolaPlatform;
 import technology.sola.engine.platform.swing.SwingSolaPlatformConfig;
 import technology.sola.logging.JavaSolaLoggerFactory;
@@ -14,9 +13,8 @@ public class SwingMain {
   }
 
   public static void main(String[] args) {
-    var solaPlatform = new SwingSolaPlatform(
-      new SwingSolaPlatformConfig(true, Color.BLACK, null)
-    );
+    var platformConfig = new SwingSolaPlatformConfig();
+    var solaPlatform = new SwingSolaPlatform(platformConfig);
     var sola = new GameSola();
 
     solaPlatform.play(sola);

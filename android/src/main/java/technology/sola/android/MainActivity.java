@@ -2,10 +2,8 @@ package technology.sola.android;
 
 import technology.sola.engine.core.Sola;
 import technology.sola.engine.game.GameSola;
-import technology.sola.engine.graphics.Color;
 import technology.sola.engine.platform.android.AndroidSolaPlatformConfig;
 import technology.sola.engine.platform.android.SolaAndroidActivity;
-import technology.sola.engine.platform.android.config.Orientation;
 import technology.sola.engine.platform.android.core.AndroidSolaLoggerFactory;
 import technology.sola.logging.SolaLogLevel;
 import technology.sola.logging.SolaLogger;
@@ -16,13 +14,15 @@ public class MainActivity extends SolaAndroidActivity {
   }
 
   public MainActivity() {
-    super(new AndroidSolaPlatformConfig(
-      true, Color.BLACK, Orientation.LANDSCAPE, true
-    ));
+    super(platformConfig());
   }
 
   @Override
   public Sola getInitialSola() {
     return new GameSola();
+  }
+
+  private static AndroidSolaPlatformConfig platformConfig() {
+    return new AndroidSolaPlatformConfig();
   }
 }
