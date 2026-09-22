@@ -1,9 +1,8 @@
 package technology.sola.javafx;
 
-import technology.sola.engine.core.SolaPlatform;
-import technology.sola.engine.core.Sola;
 import technology.sola.engine.game.GameSola;
 import technology.sola.engine.platform.javafx.JavaFxSolaPlatform;
+import technology.sola.engine.platform.javafx.JavaFxSolaPlatformConfig;
 import technology.sola.logging.JavaSolaLoggerFactory;
 import technology.sola.logging.SolaLogLevel;
 import technology.sola.logging.SolaLogger;
@@ -14,8 +13,9 @@ public class JavaFxMain {
   }
 
   public static void main(String[] args) {
-    SolaPlatform solaPlatform = new JavaFxSolaPlatform();
-    Sola sola = new GameSola();
+    var platformConfig = new JavaFxSolaPlatformConfig();
+    var solaPlatform = new JavaFxSolaPlatform(platformConfig);
+    var sola = new GameSola();
 
     solaPlatform.play(sola);
   }

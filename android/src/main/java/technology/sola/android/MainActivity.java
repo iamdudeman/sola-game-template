@@ -14,11 +14,15 @@ public class MainActivity extends SolaAndroidActivity {
   }
 
   public MainActivity() {
-    super(new AndroidSolaPlatformConfig());
+    super(platformConfig());
   }
 
   @Override
   public Sola getInitialSola() {
     return new GameSola();
+  }
+
+  private static AndroidSolaPlatformConfig platformConfig() {
+    return new AndroidSolaPlatformConfig();
   }
 }
