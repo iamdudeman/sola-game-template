@@ -10,7 +10,7 @@ subprojects {
     }
 
     dependencies {
-      classpath("com.android.tools.build:gradle:9.1.1")
+      classpath("com.android.tools.build:gradle:9.3.1")
 
       classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-android-conventions.gradle.plugin:${project.property("solaVersion")}")
       classpath("com.github.iamdudeman.sola-game-engine:technology.sola.plugins.sola-android-app.gradle.plugin:${project.property("solaVersion")}")
