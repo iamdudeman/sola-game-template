@@ -28,8 +28,8 @@ import technology.sola.engine.physics.SolaPhysics;
 import technology.sola.engine.physics.component.ColliderComponent;
 import technology.sola.engine.physics.component.DynamicBodyComponent;
 import technology.sola.engine.physics.component.collider.ColliderShapeAABB;
+import technology.sola.engine.physics.component.collider.ColliderShapeSprite;
 import technology.sola.engine.physics.event.CollisionEvent;
-import technology.sola.engine.physics.utils.ColliderUtils;
 
 @NullMarked
 public class GameSola extends Sola {
@@ -76,13 +76,6 @@ public class GameSola extends Sola {
         // finish async load
         solaEcs.setWorld(buildWorld());
         loadingScreen = null;
-
-        if (assets[0] instanceof SpriteSheet spriteSheet) {
-          ColliderUtils.autoSizeColliderToSprite(
-            solaEcs.getWorld().findEntityByName(EntityNames.DUCK),
-            spriteSheet
-          );
-        }
       });
   }
 
@@ -109,7 +102,7 @@ public class GameSola extends Sola {
     world.createEntity(
       new TransformComponent(150, 300),
       new SpriteComponent(AssetIds.Sprites.Duck.SHEET_ID, AssetIds.Sprites.Duck.DUCK),
-      new ColliderComponent(new ColliderShapeAABB())
+      new ColliderComponent(new ColliderShapeSprite(assetLoaderProvider.get(SpriteSheet.class)))
     ).setName(EntityNames.DUCK);
 
     world.createEntity()
